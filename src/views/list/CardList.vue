@@ -2,92 +2,108 @@
   <page-header-wrapper
     :tab-list="tabList"
     :tab-active-key="tabActiveKey"
-    :tab-change="(key) => {
-      this.tabActiveKey = key
-    }"
+    :tab-change="(key) => {tabActiveKey.value = key}"
     content="段落示意：蚂蚁金服务设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态， 提供跨越设计与开发的体验解决方案。"
   >
-    <template v-slot:extraContent>
+    <template #extraContent>
       <div style="width: 155px; margin-top: -20px;"><img style="width: 100%" :src="extraImage" /></div>
     </template>
     <a-list
       rowKey="id"
-      :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
+      :grid="{gutter: 24, column: 3, lg: 3, md: 2, sm: 1, xs: 1}"
       :dataSource="dataSource"
       class="card-list"
     >
-      <a-list-item slot="renderItem" slot-scope="item">
-        <template v-if="!item || item.id === undefined">
-          <a-button class="new-btn" type="dashed">
-            <a-icon type="plus"/>
-            新增产品
-          </a-button>
-        </template>
-        <template v-else>
-          <a-card :hoverable="true">
-            <a-card-meta>
-              <a slot="title">{{ item.title }}</a>
-              <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
-              <div class="meta-content" slot="description">{{ item.content }}</div>
-            </a-card-meta>
-            <template class="ant-card-actions" slot="actions">
-              <a>操作一</a>
-              <a>操作二</a>
-            </template>
-          </a-card>
-        </template>
-      </a-list-item>
+      <template #renderItem="{ item }">
+        <a-list-item >
+          <template v-if="!item || item.id === undefined">
+            <a-button class="new-btn" type="dashed">
+              <plus-outlined />新增产品
+            </a-button>
+          </template>
+          <template v-else>
+            <a-card :hoverable="true">
+              <a-card-meta>
+                <template #title>
+                  <a>{{ item.title }}</a>
+                </template>
+                <template #avatar>
+                  <a-avatar class="card-avatar" :src="item.avatar" size="large">
+                  </a-avatar>
+                </template>
+                <template #description>
+                  <div class="meta-content" >{{ item.content }}</div>
+                </template>
+              </a-card-meta>
+              <template class="ant-card-actions" #actions>
+                <a>操作一</a>
+                <a>操作二</a>
+              </template>
+            </a-card>
+          </template>
+        </a-list-item>
+      </template>
     </a-list>
   </page-header-wrapper>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, reactive, ref } from 'vue'
+import {message} from 'ant-design-vue'
 
-const dataSource = []
-dataSource.push({})
-for (let i = 0; i < 11; i++) {
-  dataSource.push({
-    id: i,
-    title: 'Alipay',
-    avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-    content: '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。'
-  })
+interface DataType{
+  id: number,
+  title: string,
+  avatar: string,
+  content: string
 }
 
-export default {
+export default defineComponent({
   name: 'CardList',
-  data () {
-    this.tabList = [
+  setup () {
+    const tabList = [
       { key: 'tab1', tab: '快速开始' },
       { key: 'tab2', tab: '产品简介' },
       { key: 'tab3', tab: '产品文档' }
     ]
-    return {
-      tabActiveKey: 'tab1',
-
-      extraImage: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
-      dataSource
+    const tabActiveKey = ref('tab1')
+    const extraImage = 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png'
+    const dataSource = reactive(<DataType[]>[])
+    dataSource.push(<DataType>{})
+    for (let i = 0; i < 11; i++) {
+      dataSource.push({
+        id: i,
+        title: 'Alipay',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
+        content: '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。'
+      })
     }
-  },
-  methods: {
-    testFun () {
-      this.$message.info('快速开始被点击！')
+    console.log('dataSource',dataSource)
+    function testFun () {
+      message.info('快速开始被点击！')
+    }
+    return {
+      tabList,
+      tabActiveKey,
+      extraImage,
+      dataSource,
+      testFun
     }
   }
-}
+})
 </script>
 
 <style lang="less" scoped>
-  @import "~@/components/index.less";
+  @import "@/components/index.less";
 
   .card-list {
-    /deep/ .ant-card-body:hover {
+    :deep(.ant-card-body:hover) {
       .ant-card-meta-title>a {
         color: @primary-color;
       }
     }
 
-    /deep/ .ant-card-meta-title {
+    :deep(.ant-card-meta-title) {
       margin-bottom: 12px;
 
       &>a {
@@ -97,7 +113,7 @@ export default {
       }
     }
 
-    /deep/ .meta-content {
+  :deep(.meta-content) {
       position: relative;
       overflow: hidden;
       text-overflow: ellipsis;
