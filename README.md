@@ -30,9 +30,7 @@ antd pro vite vue3是由Ant Design Vue Pro从vue2迁移到vue3,最可能的做�
 
 
 <p align="center">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
+    <img alt="antd pro vite vue3 Logo" width="100%" src="./preview/preview1.png">
 </p>
 
 ### 使用 Gitpod
