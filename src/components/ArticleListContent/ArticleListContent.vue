@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import userFormat, {dateFormat} from '@/utils/userFormat';
+import userFormat from '@/utils/userFormat';
 
 export default defineComponent({
   name: 'ArticleListContent',
@@ -45,7 +45,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props){
+  setup(){
     const {dateFormat}= userFormat()
     return {
       dateFormat

@@ -3,19 +3,20 @@
     class="footer custom-render"
     :links="[
           { title: 'Github', href: 'https://github.com/greatsky/antd-pro-vite-vue3' },
-          { title: 'Ant Design Vue', href: 'https://2x.antdv.com' },
+          { title: 'Ant Design Vue', href: 'https://next.antdv.com' },
         ]"
     copyright="2021 &copy; Andrew"
   />
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue';
 import { GlobalFooter } from '@ant-design-vue/pro-layout'
 
-export default {
+export default defineComponent({
   name: 'ProGlobalFooter',
   components: {
     GlobalFooter
   }
-}
+})
 </script>

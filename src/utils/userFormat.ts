@@ -28,6 +28,7 @@ export  const dateFormat = (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') => {
    * @returns {*[]}
    */
   export function filterEmpty (children = <object[]>[]) {
+    // console.log('children',children)
     if (typeof children === 'object'){
       // @ts-ignore
         return children.filter(c => c.key || (c.text && c.text.trim() !== ''))

@@ -11,8 +11,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'CardInfo',
   props: {
     activeUser: {
@@ -24,12 +26,12 @@ export default {
       default: 0
     }
   }
-}
+})
 </script>
 
 <style lang="less" scoped>
-@import "~@/components/index.less";
-@import "~@/utils/utils.less";
+@import "@/components/index.less";
+@import "@/utils/utils.less";
 
 .cardInfo {
 

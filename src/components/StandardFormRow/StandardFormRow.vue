@@ -9,13 +9,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, computed } from 'vue'
+
 const classes = [
   'antd-pro-components-standard-form-row-index-standardFormRowBlock',
   'antd-pro-components-standard-form-row-index-standardFormRowGrid',
   'antd-pro-components-standard-form-row-index-standardFormRowLast'
 ]
-export default {
+export default defineComponent({
   name: 'StandardFormRow',
   props: {
     prefixCls: {
@@ -36,18 +38,19 @@ export default {
       type: Boolean
     }
   },
-  computed: {
-    lastCls () {
-      return this.last ? classes[2] : null
-    },
-    blockCls () {
-      return this.block ? classes[0] : null
-    },
-    gridCls () {
-      return this.grid ? classes[1] : null
+  setup(props){
+    const {last,block,grid} = props
+    const lastCls = computed(()=>{ return last ? classes[2] : null})
+    const blockCls = computed(()=>{ return block ? classes[0] : null})
+    const gridCls = computed(()=>{ return grid ? classes[1] : null})
+
+    return{
+      lastCls,
+      blockCls,
+      gridCls
     }
   }
-}
+})
 </script>
 
 <style lang="less" scoped>
@@ -102,15 +105,15 @@ export default {
   }
 
   &.antd-pro-components-standard-form-row-index-standardFormRowBlock {
-    :deep(.ant-form-item,
-    div.ant-form-item-control-wrapper) {
+    :deep(.ant-form-item),
+    div.ant-form-item-control-wrapper {
       display: block;
     }
   }
 
   &.antd-pro-components-standard-form-row-index-standardFormRowGrid {
-    :deep(.ant-form-item,
-      div.ant-form-item-control-wrapper) {
+    :deep(.ant-form-item),
+      div.ant-form-item-control-wrapper {
         display: block;
       }
     :deep(.ant-form-item-label) {

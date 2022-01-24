@@ -1,13 +1,12 @@
-import {defineComponent, ref } from 'vue';
+import {defineComponent, provide, reactive, ref} from 'vue';
 // import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import Option from './TagSelectOption'
-import { filterEmpty } from '@/utils/userFormat'
+import TagSelectOption from './TagSelectOption'
+// import { filterEmpty } from '@/utils/userFormat'
 
-
-export default defineComponent({
+const tagSelect = defineComponent({
   name: 'TagSelect',
   components:{
-    Option
+    TagSelectOption
   },
   props: {
     prefixCls: {
@@ -42,44 +41,44 @@ export default defineComponent({
     const getItemsKey = (items) => {
       const totalItem = {}
      items && items.forEach(item => {
-        totalItem[item.componentOptions.propsData && item.componentOptions.propsData.value] = false
+        totalItem[item.props && item.props.value] = false
       })
       return totalItem
     }
 
-    // @ts-ignore
-    const items = getItemsKey(filterEmpty(slots.default()[0].children))
-
+    const items = reactive(getItemsKey(slots.default?.()))
     // const val = ref(props.value || props.defaultValue || [])
-
-    const onChange = (checked) => {
-      const key = Object.keys(items).filter(key => key === checked.value)
-      console.log(key)
-      // @ts-ignore
-      items[key] = checked.checked
-      const bool = Object.values(items).lastIndexOf(false)
-      localCheckAll.value = bool === -1;
+    provide('items', items)
+    const optionChange = (checked) => {
+      if (typeof checked === 'object') {
+        const key = Object.keys(items).filter(key => key === checked.value)
+        // @ts-ignore
+        items[key] = checked && checked.checked
+        const bool = Object.values(items).lastIndexOf(false)
+        localCheckAll.value = bool === -1
+      }
     }
-    const onCheckAll = (checked) => { {
-      Object.keys(items).forEach(v => {
-        items[v] = checked.checked
-      })
-      localCheckAll.value = checked.checked
+    const checkAll = (checked) => {
+        Object.keys(items).forEach(v => {
+          items[v] = checked.checked
+        })
+        localCheckAll.value = checked.checked
     }
 
     // CheckAll Button
     const renderCheckAll = () => {
-      const props = {
-        on: {
-          change: (checked) => {
-            onCheckAll(checked)
+      const renderProps = {
+        value: 'total',
+        onChange: (checked) => {
+          if (typeof checked === 'object'){
+            checkAll(checked)
             checked.value = 'total'
             emit('change', checked)
           }
         }
       }
       // @ts-ignore
-      const checkAllElement = <Option key={'total'} checked={localCheckAll} {...props}>All</Option>
+      const checkAllElement = <TagSelectOption key={'total'} v-model={[localCheckAll.value, 'checked']} {...renderProps}>All</TagSelectOption>
       return !hideCheckAll && checkAllElement || null
     }
     // expandable
@@ -87,18 +86,25 @@ export default defineComponent({
     //
     // }
     // render option
-    const renderTags = (items) => {
-      const listeners = {
-        change: (checked) => {
-          onChange(checked)
-          emit('change', checked)
+    const renderTags = (its) => {
+      const renderProps = {
+        value:'',
+          onChange: (checked) => {
+            if (typeof checked === 'object') {
+              optionChange(checked)
+              emit('change', checked)
+            }
         }
       }
+      return  its.map(vnode => {
+        const options = vnode.children
+        const nodeKey = vnode.props.value
+        renderProps.value = nodeKey
 
-      return items.map(vnode => {
-        const options = vnode.componentOptions
-        options.listeners = listeners
-        return vnode
+      // @ts-ignore
+        return <TagSelectOption key={nodeKey}
+                              v-model={[items[nodeKey], 'checked']}
+                              {...renderProps}>{options[0].children}</TagSelectOption>
       })
     }
 
@@ -107,8 +113,9 @@ export default defineComponent({
         const classString = {
           [`${prefixCls}`]: true
         }
-        // @ts-ignore
-      const tagItems = filterEmpty(slots.default())
+      const tagItems = slots.default?.()
+      // const rt=renderTags(tagItems)
+      // console.log('rt',rt)
          return (
           <div class={classString}>
             {renderCheckAll()}
@@ -116,8 +123,9 @@ export default defineComponent({
           </div>
         )
       }
-     return () => render()
-    }
-  }
 
+    return () => render()
+  }
 })
+
+export default tagSelect

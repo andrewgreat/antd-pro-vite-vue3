@@ -17,7 +17,10 @@
   </page-header-wrapper>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, ref, watch } from 'vue'
+import {useRoute, useRouter} from 'vue-router'
+
 const getActiveKey = (path) => {
   switch (path) {
     case '/list/search/article':
@@ -30,45 +33,47 @@ const getActiveKey = (path) => {
       return '1'
   }
 }
-export default {
+export default defineComponent({
   name: 'SearchLayout',
-  data () {
-    return {
-      tabList: [
-        { key: '1', tab: '文章' },
-        { key: '2', tab: '项目' },
-        { key: '3', tab: '应用' }
-      ],
-      tabActiveKey: '1',
-      search: true
-    }
-  },
-  created () {
-    this.tabActiveKey = getActiveKey(this.$route.path)
-
-    this.$watch('$route', (val) => {
-      this.tabActiveKey = getActiveKey(val.path)
+  setup () {
+    const route = useRoute()
+    const router = useRouter()
+    const tabList = [
+      { key: '1', tab: '文章' },
+      { key: '2', tab: '项目' },
+      { key: '3', tab: '应用' }
+    ]
+    const tabActiveKey= ref('1')
+    const search = ref(true)
+    //created
+    tabActiveKey.value = getActiveKey(route.path)
+    watch(route, (val) => {
+      tabActiveKey.value = getActiveKey(val.path)
     })
-  },
-  methods: {
-    handleTabChange (key) {
-      this.tabActiveKey = key
+    function handleTabChange (key) {
+      tabActiveKey.value = key
       switch (key) {
         case '1':
-          this.$router.push('/list/search/article')
+          router.push('/list/search/article')
           break
         case '2':
-          this.$router.push('/list/search/project')
+          router.push('/list/search/project')
           break
         case '3':
-          this.$router.push('/list/search/application')
+          router.push('/list/search/application')
           break
         default:
-          this.$router.push('/workplace')
+          router.push('/workplace')
       }
     }
+    return {
+      tabList,
+      tabActiveKey,
+      search,
+      handleTabChange
+    }
   }
-}
+})
 </script>
 
 <style lang="less" scoped>

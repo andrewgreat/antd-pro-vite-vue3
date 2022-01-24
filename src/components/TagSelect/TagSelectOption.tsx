@@ -1,6 +1,7 @@
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, watch, inject } from 'vue'
 import { Tag } from 'ant-design-vue'
 
+const { CheckableTag } = Tag
 export default defineComponent({
   name: 'TagSelectOption',
   props: {
@@ -17,25 +18,32 @@ export default defineComponent({
       default: false
     }
   },
-  setup (props,{ slots, emit }) {
-    const { CheckableTag } = Tag
+  setup: function (props, {slots, emit}) {
     const localChecked = ref(props.checked || false)
-    const checked = ref(props.checked)
-    const value = ref(props.value)
+    const optionValue = ref(props.value)
+    const items: any = inject('items')
 
-    watch(checked, (val) => {
+    watch(() => props.checked, (val) => {
       localChecked.value = val
     })
 
+    watch(items, (val) => {
+        // @ts-ignore
+        optionValue && val.hasOwnProperty(optionValue.value) && (localChecked.value = val[optionValue.value])
+      },
+      {deep: true}
+    )
+
     const render = () => {
-      const onChange = (checked) => {
-        emit('change', { value, checked })
+      const optionChange = (optionChecked: boolean) => {
+        // @ts-ignore
+        emit('change', {value: optionValue.value, checked: optionChecked})
       }
-
+      const renderSlot = slots.default?.()
       // @ts-ignore
-      return (<CheckableTag key={value} vModel={localChecked} onChange={onChange}>{(slots.default())}</CheckableTag>)
+      return (
+        <CheckableTag v-model={[localChecked.value, 'checked']} onChange={optionChange}>{renderSlot}</CheckableTag>)
     }
-
     return () => render()
   }
 })
