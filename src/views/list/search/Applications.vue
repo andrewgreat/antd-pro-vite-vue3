@@ -152,7 +152,7 @@ export default defineComponent({
     function handleChange (value) {
       console.log(`selected ${value}`)
     }
-    onMounted(()=> getList())
+    onMounted(() => getList())
     return {
       formRef,
       data,

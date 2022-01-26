@@ -4,10 +4,10 @@
     :tab-active-key="tabActiveKey"
     :tab-change="handleTabChange"
   >
-    <template v-slot:content>
+    <template #content>
       <div class="ant-pro-page-header-search">
         <a-input-search size="large" style="width: 80%; max-width: 522px;">
-          <template v-slot:enterButton>
+          <template #enterButton>
             搜索
           </template>
         </a-input-search>
@@ -31,7 +31,7 @@ export default defineComponent({
       { key: '2', tab: '项目' },
       { key: '3', tab: '应用' }
     ])
-    // const tabActiveKey= ref('2')
+    const tabActiveKey= ref('2')
     const search = ref(true)
     const getActiveKey = (path) => {
       switch (path) {
@@ -46,7 +46,7 @@ export default defineComponent({
       }
     }
     //created
-    const tabActiveKey = ref(getActiveKey(route.path))
+    tabActiveKey.value = getActiveKey(route.path)
     watch(route, (val) => {
       tabActiveKey.value = getActiveKey(val.path)
     })

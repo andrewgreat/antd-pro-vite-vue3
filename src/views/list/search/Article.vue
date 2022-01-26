@@ -181,7 +181,7 @@ export default defineComponent({
       formRef.owner.push('wzj')
     }
 
-    onMounted(()=>getList())
+    onMounted(() => getList())
     return {
       owners,
       loading,

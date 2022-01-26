@@ -132,7 +132,7 @@ export default defineComponent({
     const fromNow = computed(() => (date) => {
       return dayjs(date).fromNow()
     })
-    onMounted(()=> getList())
+    onMounted(() => getList())
 
     return {
       formRef,

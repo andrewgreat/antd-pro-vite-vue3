@@ -1,12 +1,12 @@
 import {defineComponent, provide, reactive, ref} from 'vue';
 // import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import TagSelectOption from './TagSelectOption'
+import Option from './TagSelectOption'
 // import { filterEmpty } from '@/utils/userFormat'
 
 const tagSelect = defineComponent({
   name: 'TagSelect',
   components:{
-    TagSelectOption
+    Option
   },
   props: {
     prefixCls: {
@@ -78,7 +78,7 @@ const tagSelect = defineComponent({
         }
       }
       // @ts-ignore
-      const checkAllElement = <TagSelectOption key={'total'} v-model={[localCheckAll.value, 'checked']} {...renderProps}>All</TagSelectOption>
+      const checkAllElement = <Option key={'total'} v-model={[localCheckAll.value, 'checked']} {...renderProps}>All</Option>
       return !hideCheckAll && checkAllElement || null
     }
     // expandable
@@ -102,9 +102,9 @@ const tagSelect = defineComponent({
         renderProps.value = nodeKey
 
       // @ts-ignore
-        return <TagSelectOption key={nodeKey}
+        return <Option key={nodeKey}
                               v-model={[items[nodeKey], 'checked']}
-                              {...renderProps}>{options[0].children}</TagSelectOption>
+                              {...renderProps}>{options[0].children}</Option>
       })
     }
 
