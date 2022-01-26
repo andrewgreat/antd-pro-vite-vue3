@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-card :bordered="false" class="ant-pro-components-tag-select">
-      <a-form  layout="inline">
+      <a-form :model="formRef">
         <standard-form-row title="所属类目" block style="padding-bottom: 11px;">
           <a-form-item>
             <tag-select>
@@ -27,6 +27,7 @@
                   style="max-width: 268px; width: 100%;"
                   mode="multiple"
                   placeholder="选择 onwer"
+                  v-model:value="formRef.owner"
                   @change="handleChange"
                 >
                   <a-select-option v-for="item in owners" :key="item.id">{{ item.name }}</a-select-option>
@@ -41,14 +42,14 @@
           <a-row :gutter="16">
             <a-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8">
               <a-form-item label="活跃用户" :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
-                <a-select placeholder="不限" style="max-width: 200px; width: 100%;">
+                <a-select placeholder="不限" style="max-width: 200px; width: 100%;" v-model:value="formRef.activeUser">
                   <a-select-option value="李三">李三</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8">
               <a-form-item label="好评度" :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
-                <a-select placeholder="不限" style="max-width: 200px; width: 100%;">
+                <a-select placeholder="不限" style="max-width: 200px; width: 100%;" v-model:value="formRef.rate">
                   <a-select-option value="优秀">优秀</a-select-option>
                 </a-select>
               </a-form-item>
@@ -99,10 +100,17 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref} from 'vue'
+import {defineComponent, onMounted, reactive, ref, UnwrapRef} from 'vue'
 import {requestGet} from '@/api/service'
 import { TagSelect, StandardFormRow, ArticleListContent } from '@/components'
 import IconText from './components/IconText.vue'
+
+interface ArticleType{
+  category:string[],
+  owner:string[],
+  activeUser: string[],
+  rate: string|undefined
+}
 
 const TagSelectOption = TagSelect.Option
 export default defineComponent({
@@ -113,7 +121,7 @@ export default defineComponent({
     ArticleListContent,
     IconText
   },
-  setup () {
+  setup() {
     const owners = [
       {
         id: 'wzj',
@@ -140,15 +148,24 @@ export default defineComponent({
     const loadingMore= ref(false)
     const data = reactive([])
 
+    const formRef: UnwrapRef<ArticleType> = reactive({
+      category:[],
+      owner:[],
+      activeUser: [],
+      rate: undefined
+    })
+
     function handleChange (value) {
       console.log(`selected ${value}`)
     }
+
     function getList () {
       requestGet('/api/list/article').then(res => {
         data.push(...data.concat(res.data))
         loading.value = false
       })
     }
+
     function loadMore () {
       loadingMore.value = true
       requestGet('/api/list/article').then(res => {
@@ -158,19 +175,18 @@ export default defineComponent({
         loadingMore.value = false
       })
     }
+
     function setOwner () {
-      const { form: { setFieldsValue } } = this
-      setFieldsValue({
-        owner: ['wzj']
-      })
+      formRef.owner.length = 0
+      formRef.owner.push('wzj')
     }
 
     onMounted(()=>getList())
-
     return {
       owners,
       loading,
       loadingMore,
+      formRef,
       data,
       handleChange,
       getList,

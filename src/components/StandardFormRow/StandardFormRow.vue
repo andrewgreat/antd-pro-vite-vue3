@@ -43,7 +43,6 @@ export default defineComponent({
     const lastCls = computed(()=>{ return last ? classes[2] : null})
     const blockCls = computed(()=>{ return block ? classes[0] : null})
     const gridCls = computed(()=>{ return grid ? classes[1] : null})
-
     return{
       lastCls,
       blockCls,
@@ -65,12 +64,12 @@ export default defineComponent({
   :deep(.ant-form-item) {
     margin-right: 24px;
   }
-  :deep(.ant-form-item-label label) {
+  :deep(.ant-form-item-label) label {
     margin-right: 0;
     color: @text-color;
   }
-  :deep(.ant-form-item-label,
-  .ant-form-item-control)  {
+  :deep(.ant-form-item-label),
+  .ant-form-item-control  {
     padding: 0;
     line-height: 32px;
   }

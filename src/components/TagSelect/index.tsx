@@ -114,8 +114,6 @@ const tagSelect = defineComponent({
           [`${prefixCls}`]: true
         }
       const tagItems = slots.default?.()
-      // const rt=renderTags(tagItems)
-      // console.log('rt',rt)
          return (
           <div class={classString}>
             {renderCheckAll()}
