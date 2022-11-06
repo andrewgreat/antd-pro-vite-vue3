@@ -2,21 +2,21 @@
   "name": "antd-pro-vite-vue3",
   "version": "0.0.0",
   "scripts": {
-    "serve": "vite preview",
+    "serve": "vite",
+    "preview": "vite preview",
     "build": "vue-tsc --noEmit && vite build",
     "dev": "cross-env NODE_ENV=development vite"
   },
   "dependencies": {
-    "@ant-design-vue/pro-layout": "^3.1.13",
-    "@ant-design/icons-vue": "^6.0.1",
+    "@ant-design-vue/pro-layout": "^3.2.3",
+    "@ant-design/icons-vue": "^6.1.0",
     "@antv/data-set": "^0.11.8",
     "@types/md5": "^2.3.1",
     "@types/store": "^2.0.2",
-    "ant-design-vue": "^3.0.0-beta.7",
+    "ant-design-vue": "^3.2.13",
     "axios": "^0.24.0",
-    "core-js": "^3.20.0",
     "dayjs": "^1.10.7",
-    "echarts": "^5.2.2",
+    "echarts": "^5.4.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
@@ -26,11 +26,11 @@
     "nprogress": "^1.0.0-1",
     "pinia": "^2.0.9",
     "store": "^2.0.12",
-    "vue": "^3.2.16",
+    "vue": "^3.2.41",
     "vue-cropper": "^1.0.2",
     "vue-i18n": "^9.2.0-beta.26",
     "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.1",
