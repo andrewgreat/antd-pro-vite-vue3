@@ -1,11 +1,37 @@
 <template>
-  <a-drawer v-model:visible="visible" :width="300" placement="right" :closable="false">
+  <a-drawer
+    v-model:visible="visible"
+    :width="300"
+    placement="right"
+    :closable="false"
+  >
     <template #handle>
       <div class="ant-pro-setting-drawer-handle" @click="handleShowDrawer">
         <SettingOutlined v-if="!visible" />
         <CloseOutlined v-else />
       </div>
     </template>
+    <div class="setting-drawer-index-content">
+      <h3 class="setting-drawer-index-title">整体风格设置</h3>
+      <div class="setting-drawer-index-blockChecbox">
+        <a-tooltip v-for="(a, i) in themeList" :key="i" placement="top">
+          <template #title>
+            <span>{{ a.tips }}</span>
+          </template>
+          <div
+            :class="['setting-drawer-index-item', a.style]"
+            @click="handleMenuTheme(a.value)"
+          >
+            <img :src="a.image" :alt="a.value" />
+            <check-outlined
+              v-if="sideStyle === a.value"
+              class="setting-drawer-index-selectIcon"
+            />
+          </div>
+        </a-tooltip>
+      </div>
+    </div>
+
     <div class="margin-bottom: 24px">
       <h3>导航模式</h3>
       <a-radio-group
@@ -102,33 +128,63 @@
   </a-drawer>
 </template>
 
-<script setup lang="ts">
-import { ref, toRaw } from 'vue';
+<script setup name="SettingDrawer" lang="ts">
+import { ref, toRaw } from "vue";
+import { useStore } from "vuex";
 
 type CheckedType = boolean | string | number;
-type ConfType = 'layout' | 'fixedHeader' | 'fixSiderbar' | string;
+type ConfType = "layout" | "fixedHeader" | "fixSiderbar" | string;
 
 const props = defineProps<{
   modelValue: Record<string, any>;
 }>();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
+
+const store = useStore();
+// 整体风格
+const sideStyle = store.state.app.theme;
+
+const themeList = [
+  {
+    tips: "默认主题风格",
+    value: "theme-default",
+    image: "/public/images/LCkqqYNmvBEbokSDscrm.svg",
+    style: "setting-checkbox-item-default",
+  },
+  {
+    tips: "亮色主题风格",
+    value: "theme-light",
+    image: "/public/images/jpRkZQMyYRryryPNtyIC.svg",
+    style: "setting-checkbox-item-light",
+  },
+  {
+    tips: "暗黑模式",
+    value: "theme-dark",
+    image: "/public/images/LCkqqYNmvBEbokSDdark.svg",
+    style: "setting-checkbox-item-dark",
+  },
+];
 
 const visible = ref<boolean>(false);
 const handleShowDrawer = () => {
   visible.value = !visible.value;
 };
 
+const handleMenuTheme = (theme: string) => {
+  console.log(`theme: ${theme}, todo...`)
+};
+
 const updateConf = (val: any, type: ConfType) => {
   const newVal = {
     ...toRaw(props.modelValue),
-    [`${type}`]: val
+    [`${type}`]: val,
   };
-  console.log('newConf', newVal);
-  emit('update:modelValue', newVal);
+  console.log("newConf", newVal);
+  emit("update:modelValue", newVal);
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .ant-pro-setting-drawer-handle {
   position: absolute;
   top: 240px;
@@ -151,4 +207,74 @@ const updateConf = (val: any, type: ConfType) => {
     font-size: 20px;
   }
 }
+
+.setting-drawer-index-content {
+  .setting-drawer-index-blockChecbox {
+    display: flex;
+
+    .setting-drawer-index-item {
+      margin-right: 16px;
+      position: relative;
+      border-radius: 4px;
+      cursor: pointer;
+
+      img {
+        width: 48px;
+      }
+
+      .setting-drawer-index-selectIcon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        padding-top: 15px;
+        padding-left: 24px;
+        height: 100%;
+        color: #1890ff;
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+  }
+  .setting-drawer-theme-color-colorBlock {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    float: left;
+    cursor: pointer;
+    margin-right: 8px;
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+
+    i {
+      font-size: 14px;
+    }
+  }
+}
+.setting-drawer-index-handle {
+  position: absolute;
+  top: 240px;
+  background: #1890ff;
+  width: 48px;
+  height: 48px;
+  right: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1001;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 4px 0 0 4px;
+
+  i {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+  }
+}
 </style>
+
