@@ -5,22 +5,25 @@
         <template #title>
           <a>风格配色</a>
         </template>
-        <template v-slot:description>
-          <span>
-            整体风格配色设置
-          </span>
+        <template #description>
+          <span> 整体风格配色设置 </span>
         </template>
       </a-list-item-meta>
-      <template v-slot:actions>
-        <a-switch checkedChildren="暗色" unCheckedChildren="白色" :defaultChecked="navTheme === 'dark' && true || false" @change="onChange" />
+      <template #actions>
+        <a-switch
+          v-model:checked="navChecked"
+          checkedChildren="暗色"
+          unCheckedChildren="白色"
+          @change="onChange"
+        />
       </template>
     </a-list-item>
     <a-list-item>
       <a-list-item-meta>
-        <template v-slot:title>
+        <template #title>
           <a>主题色</a>
         </template>
-        <template v-slot:description>
+        <template #description>
           <span>
             页面风格配色： <a>{{ colorFilter(primaryColor) }}</a>
           </span>
@@ -30,41 +33,52 @@
   </a-list>
 </template>
 <script lang="ts">
-import {defineComponent} from 'vue'
-import { colorList } from '@/components/SettingDrawer/settingConfig'
-import { baseMixin } from '@/store/app-mixin'
-import { NAV_THEME, TOGGLE_NAV_THEME } from '@/store/mutation-types'
+import { defineComponent, computed, ref } from "vue";
+import { useStore } from "vuex";
+import { colorList } from "@/components/SettingDrawer/settingConfig";
+import { appBase } from "@/store/app-base";
+import { NAV_THEME, TOGGLE_NAV_THEME } from "@/store/mutation-types";
 
 const themeMap = {
-  'dark': '暗色',
-  'light': '白色'
-}
+  dark: "暗色",
+  light: "白色",
+};
 
 export default defineComponent({
-  name: 'CustomSettings',
-  mixins: [baseMixin],
-  data () {
-    return {
-    }
-  },
-  filters: {
-    themeFilter (theme) {
-      return themeMap[theme]
-    }
-  },
-  methods: {
-    colorFilter (color) {
-      const c = colorList.find(o => o.color === color)
-      return c && c.key
-    },
+  name: "CustomSettings",
 
-    onChange (checked) {
+  setup() {
+    const store = useStore();
+    const navTheme = appBase.navTheme;
+    const primaryColor = appBase.primaryColor;            
+    const navChecked =ref((navTheme === 'dark' && true) || false)
+
+    const themeFilter = (theme) => {
+      return themeMap[theme];
+    };
+
+    const colorFilter = computed(() => {
+      return (color) => {
+        const c = colorList.find((o) => o.color === color);
+        return c && c.key;
+      };
+    });
+
+    const onChange = (checked) => {
       if (checked) {
-        this.$store.commit(TOGGLE_NAV_THEME, NAV_THEME.DARK)
+        store.commit(TOGGLE_NAV_THEME, NAV_THEME.DARK);
       } else {
-        this.$store.commit(TOGGLE_NAV_THEME, NAV_THEME.LIGHT)
+        store.commit(TOGGLE_NAV_THEME, NAV_THEME.LIGHT);
       }
-    }
-  }
-})
+    };
+
+    return {
+      navChecked,
+      primaryColor,
+      themeFilter,
+      colorFilter,
+      onChange,
+    };
+  },
+});
 </script>
