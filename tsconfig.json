@@ -23,6 +23,7 @@
       "./node_modules/@types/",
       "./types"
     ],
+    "types":["ant-design-vue/typings/global"],
     "paths": {
       "@/*": [
         "src/*"

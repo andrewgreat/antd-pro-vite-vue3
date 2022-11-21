@@ -117,7 +117,7 @@
       :bordered="false"
       :tabList="operationTabList"
       :activeTabKey="operationActiveTabKey"
-      @tabChange="(key) => {this.operationActiveTabKey = key}"
+      @tabChange="(key) => {operationActiveTabKey = key}"
     >
       <a-table
         v-if="operationActiveTabKey === '1'"

@@ -40,7 +40,7 @@
         </div>
         <div class="account-settings-info-right">
           <div class="account-settings-info-title">
-            <span>{{ $t($route.meta.title) }}</span>
+            <span>{{ $t(route.meta.title) }}</span>
           </div>
           <route-view></route-view>
         </div>
@@ -101,6 +101,7 @@ export default defineComponent({
     watch(route,() => updateMenu())
 
     return {
+      route,
       isMobile,
       mode,
       openKeys,

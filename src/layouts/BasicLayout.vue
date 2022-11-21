@@ -65,13 +65,12 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { getMenuData, clearMenuItem, GlobalFooter } from '@ant-design-vue/pro-layout';
 import type { RouteContextProps } from '@ant-design-vue/pro-layout';
-import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE } from '@/store/mutation-types'
+import { SIDEBAR_TYPE } from '@/store/mutation-types'
 import defaultSettings from '@/config/defaultSettings';
 import RightContent from '@/components/GlobalHeader/RightContent.vue';
 import ProGlobalFooter from '@/components/GlobalFooter/index.vue';
 import SettingDrawer from '@/components/SettingDrawer/index.vue';
 
-// const i18n = (t: string) => t;
 export default defineComponent({
   name: 'BasicLayout',
   components: {
@@ -94,20 +93,21 @@ export default defineComponent({
       // default
       collapsed: false,
     });
+
     const settings =ref({
-      splitMenus: true,
+      splitMenus: store.state.app.splitMenus,
       title: defaultSettings.title,
-      // 主题 'dark' | 'light'
-      navTheme: defaultSettings.navTheme,
+      // 主题 'dark' | 'light' | 'realDark'
+      navTheme:  store.state.app.navTheme,
       // 布局类型
-      layout: defaultSettings.layout, // 'side', 'top', 'mix'
-      fixedHeader: defaultSettings.fixedHeader,
-      fixSiderbar: defaultSettings.fixSiderbar,
+      layout: store.state.app.layout, // 'side', 'top', 'mix'
+      fixedHeader: store.state.app.fixedHeader,
+      fixSiderbar: store.state.app.fixSiderbar,
       // CONTENT_WIDTH_TYPE
-      contentWidth: defaultSettings.layout === 'side' ? CONTENT_WIDTH_TYPE.Fluid : defaultSettings.contentWidth,
+      contentWidth: store.state.app.contentWidth,
       // 主色调
-      primaryColor: defaultSettings.primaryColor,
-      colorWeak: defaultSettings.colorWeak,
+      primaryColor: store.state.app.primaryColor,
+      colorWeak: store.state.app.colorWeak,
       hideHintAlert: false,
       hideCopyButton: false,
     });

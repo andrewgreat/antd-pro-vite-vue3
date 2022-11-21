@@ -7,6 +7,7 @@ import bootstrap from '@/core/bootstrap'
 import { lazyApp } from '@/core/lazy_use'
 import ProLayout, { PageContainer } from '@ant-design-vue/pro-layout'
 import './style/global.less' // global style
+
 import permission from './permission'
 import router from '@/router'
 const vueApp = createApp(App)

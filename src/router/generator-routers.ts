@@ -53,7 +53,7 @@ const constantRouterComponents = {
   AccountSettings: () => import('@/views/account/settings/Index.vue'),
   BasicSettings: () => import('@/views/account/settings/BasicSetting.vue'),
   SecuritySettings: () => import('@/views/account/settings/Security.vue'),
-  CustomSettings: () => import('@/views/exception/404.vue'),
+  CustomSettings: () => import('@/views/account/settings/Custom.vue'),
   BindingSettings: () => import('@/views/account/settings/Binding.vue'),
   NotificationSettings: () => import('@/views/account/settings/Notification.vue'),
 

@@ -1,15 +1,15 @@
-import client from 'vite/dist/client'
-import generate from '@ant-design/colors/lib/generate'
+import { toNum3, mixLighten } from 'vite-plugin-theme';
+import { generate } from '@ant-design/colors'
 
 export default {
   getAntdSerials (color) {
     // 淡化（即less的tint）
-    const lightens = new Array(9).fill().map((t, i) => {
-      return client.varyColor.lighten(color, i / 10)
+    const lightens = new Array(9).fill(0).map((t, i) => {
+      return mixLighten(color, i / 10)
     })
     // colorPalette变换得到颜色值
     const colorPalettes = generate(color)
-    const rgb = client.varyColor.toNum3(color.replace('#', '')).join(',')
+    const rgb = toNum3(color.replace('#', '')).join(',')
     return lightens.concat(colorPalettes).concat(rgb)
   },
   changeColor (newColor) {
@@ -19,6 +19,7 @@ export default {
         return `/${cssUrl}` // while router is not `hash` mode, it needs absolute path
       }
     }
+    // return null
     return client.changer.changeColor(options, Promise)
   }
 }

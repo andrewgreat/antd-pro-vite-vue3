@@ -4,6 +4,8 @@ import {resolve} from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import viteSvgIcons from 'vite-plugin-svg-icons'
+import { getThemeVariables } from 'ant-design-vue/dist/theme';
+import { viteThemePlugin } from 'vite-plugin-theme';
 import { viteMockServe } from "vite-plugin-mock"
 
 // https://vitejs.dev/config/
@@ -50,9 +52,10 @@ export default ({ command }: ConfigEnv): UserConfigExport =>{
         less: {
           // DO NOT REMOVE THIS LINE
           javascriptEnabled: true,
-          modifyVars: {
-            hack: `true; @import 'ant-design-vue/es/style/themes/default.less'`, // dark.less
-          }
+          modifyVars: getThemeVariables(),
+          // modifyVars: {
+          //   hack: `true; @import 'ant-design-vue/dist/antd.less'`, // antd.dark.less
+          // }
         },
       },
       postcss: {}
@@ -65,6 +68,10 @@ export default ({ command }: ConfigEnv): UserConfigExport =>{
         iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
         // 指定symbolId格式
         symbolId: 'icon-[name]',
+      }),
+      viteThemePlugin({
+        // 匹配需要修改的颜色
+         colorVariables: [],
       }),
       viteMockServe({
         mockPath: "./mock",

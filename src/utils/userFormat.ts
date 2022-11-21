@@ -70,7 +70,7 @@ export  const getStrFullLength = (str = '') =>
     }, '')
   }
 
-const userFormat= function() {
+const userFormat = () => {
   return { NumberFormat, dayjs, dateFormat, filterEmpty, getStrFullLength, cutStrByFullLength }
 }
 

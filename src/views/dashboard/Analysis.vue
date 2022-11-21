@@ -50,7 +50,7 @@
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" :title="$t('dashboard.analysis.operational-effect')" total="78%">
           <template #action>
-          <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
+          <a-tooltip :title="$t('dashboard.analysis.introduce')">
             <InfoCircleOutlined />
           </a-tooltip>
           </template>
