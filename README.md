@@ -37,7 +37,7 @@ antd pro vite vue3是由Ant Design Vue Pro从vue2迁移到vue3,最可能的做�
 
 在 Gitpod（适用于 GitHub 的免费在线开发环境）中打开项目，并立即开始编码.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/anncwb/vue-vben-admin)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)]()
 
 ## 文档
 

@@ -854,7 +854,7 @@
     "@vue/compiler-dom" "3.2.45"
     "@vue/shared" "3.2.45"
 
-"@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.13", "@vue/devtools-api@^6.0.0-beta.18", "@vue/devtools-api@^6.0.0-beta.21":
+"@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.13", "@vue/devtools-api@^6.0.0-beta.18":
   version "6.0.0-beta.21.1"
   resolved "https://registry.npmmirror.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.21.1.tgz#f1410f53c42aa67fa3b01ca7bdba891f69d7bc97"
   integrity sha512-FqC4s3pm35qGVeXRGOjTsRzlkJjrBLriDS9YXbflHLsfA9FrcKzIyWnLXoNm+/7930E8rRakXuAc2QkC50swAw==
@@ -3486,14 +3486,6 @@ pify@^4.0.1:
   resolved "https://registry.npm.taobao.org/pify/download/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha1-SyzSXFDVmHNcUCkiJP2MbfQeMjE=
 
-pinia@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.npmmirror.com/pinia/download/pinia-2.0.9.tgz#7d7767c46e3810fff046c289453242a68fc23492"
-  integrity sha512-iuYdxLJKQ07YPyOHYH05wNG9eKWqkP/4y4GE8+RqEYtz5fwHgPA5kr6zQbg/DoEJGnR2XCm1w1vdt6ppzL9ATg==
-  dependencies:
-    "@vue/devtools-api" "^6.0.0-beta.21"
-    vue-demi "*"
-
 point-at-length@^1.0.2:
   version "1.1.0"
   resolved "https://registry.nlark.com/point-at-length/download/point-at-length-1.1.0.tgz#0ad72ebd0980d7f5a1ab12296c055f9eb6b30e57"
@@ -4633,11 +4625,6 @@ vue-cropper@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmmirror.com/vue-cropper/download/vue-cropper-1.0.2.tgz#61eb2080cb654da2cdcd905c4c6885f87d7d3921"
   integrity sha1-YesggMtlTaLNzZBcTGiF+H19OSE=
-
-vue-demi@*:
-  version "0.12.1"
-  resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
-  integrity sha1-9+GO++z/0RqwadFHLXoG4xm0F0w=
 
 vue-i18n@^9.2.0-beta.26:
   version "9.2.0-beta.26"
