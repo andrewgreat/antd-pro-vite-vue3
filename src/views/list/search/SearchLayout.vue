@@ -2,7 +2,7 @@
   <page-container
     :tab-list="tabList"
     :tab-active-key="tabActiveKey"
-    :tab-change="handleTabChange"
+    :on-tab-change="handleTabChange"
   >
     <template #content>
       <div class="ant-pro-page-header-search">
