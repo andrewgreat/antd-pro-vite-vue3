@@ -74,7 +74,7 @@ yarn
 - 运行
 
 ```bash
-yarn dev
+yarn serve
 ```
 
 - 打包

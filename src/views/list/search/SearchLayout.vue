@@ -6,7 +6,7 @@
   >
     <template #content>
       <div class="ant-pro-page-header-search">
-        <a-input-search size="large" style="width: 80%; max-width: 522px;">
+        <a-input-search size="default" style="width: 80%; max-width: 522px;">
           <template #enterButton>
             搜索
           </template>
